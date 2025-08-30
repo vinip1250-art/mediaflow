@@ -37,6 +37,11 @@ app = FastAPI()
 # Suas outras rotas do Mediaflow Proxy estão aqui...
 
 @app.get("/")
+
+@app.get("/", methods=["GET", "HEAD"])
+def health_check():
+    return {"status": "ok"}
 def health_check():
     return {"status": "ok"}
     
+
