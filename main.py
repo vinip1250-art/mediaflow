@@ -49,7 +49,9 @@ async def redirect_proxy(request: Request):
     if password:
         params["api_password"] = password
 
-    base_url = "https://viniciusacx-mediaflow-proxy.hf.space/proxy"
-    query = "&".join([f"{k}={v}" for k, v in params.items()])
+# Mude a URL abaixo para a URL real da API do Mediaflow no Hugging Face
+base_url = "https://viniciusacx-mediaflow-proxy.hf.space/run/predict/"
+query = "&".join([f"{k}={v}" for k, v in params.items()])
     
     return RedirectResponse(f"{base_url}?{query}")
+
