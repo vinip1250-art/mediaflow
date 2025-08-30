@@ -11,7 +11,7 @@ app = FastAPI()
 def health_check():
     """
     Endpoint para verificação de saúde do Render.
-    Retorna 200 OK para evitar que o serviço seja reiniciado.
+    Retorna 200 OK.
     """
     return {"status": "ok"}
 
@@ -19,13 +19,15 @@ def health_check():
 def health_check_head():
     """
     Endpoint para verificação de saúde com o método HEAD.
+    Retorna uma resposta vazia com status 200 OK.
     """
-    return JSONResponse(status_code=200)
+    return JSONResponse(content={})
 
 @app.get("/proxy/ip")
 def get_public_ip(request: Request):
     """
     Retorna o IP público do proxy, essencial para o Real-Debrid.
+    O IP é extraído do cabeçalho X-Forwarded-For, adicionado pelo Render.
     """
     ip_address = request.headers.get("X-Forwarded-For")
     if ip_address:
@@ -43,12 +45,10 @@ async def redirect_proxy(request: Request):
     """
     params = dict(request.query_params)
     
-    # Extrai e remapeia a senha para a api_password
     password = params.pop("password", None)
     if password:
         params["api_password"] = password
 
-    # Constrói a URL de destino
     base_url = "https://viniciusacx-mediaflow-proxy.hf.space/proxy"
     query = "&".join([f"{k}={v}" for k, v in params.items()])
     
