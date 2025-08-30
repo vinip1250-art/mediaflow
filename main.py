@@ -6,6 +6,16 @@ app = FastAPI()
 @app.get("/proxy")
 async def redirect_proxy(request: Request):
     params = dict(request.query_params)
+
+    # Extrair credenciais se existirem
+    username = params.pop("username", None)
+    password = params.pop("password", None)
+
+    # Se o campo 'password' estiver presente, usá-lo como api_password
+    if password:
+        params["api_password"] = password
+
+    # Montar a URL final
     base_url = "https://viniciusacx-mediaflow-proxy.hf.space/proxy"
     query = "&".join([f"{k}={v}" for k, v in params.items()])
     return RedirectResponse(f"{base_url}?{query}")
