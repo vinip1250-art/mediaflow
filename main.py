@@ -29,3 +29,14 @@ app = FastAPI()
 @app.get("/")
 def health_check():
     return {"status": "ok"}
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+# Suas outras rotas do Mediaflow Proxy estão aqui...
+
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
+    
