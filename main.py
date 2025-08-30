@@ -19,3 +19,13 @@ async def redirect_proxy(request: Request):
     base_url = "https://viniciusacx-mediaflow-proxy.hf.space/proxy"
     query = "&".join([f"{k}={v}" for k, v in params.items()])
     return RedirectResponse(f"{base_url}?{query}")
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+# Suas outras rotas do Mediaflow Proxy estão aqui...
+
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
